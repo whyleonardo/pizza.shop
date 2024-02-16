@@ -1,6 +1,6 @@
 # 🍕 pizza.shop
 
-Esse é um projeto realizado com base no curso da Rocketseat! 🚀💜
+Esse é um projeto realizado com base no curso da [Rocketseat](https://github.com/Rocketseat)! 🚀💜
 
 ### Stack Utilizada:
 
