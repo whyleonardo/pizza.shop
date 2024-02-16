@@ -1,6 +1,8 @@
-# Esse é um projeto realizado com base no curso da Rocketseat!
+# pizza.shop
 
-## Stack Utilizada:
+Esse é um projeto realizado com base no curso da Rocketseat! 🚀💜
+
+### Stack Utilizada:
 
 - React
 - Typescript
