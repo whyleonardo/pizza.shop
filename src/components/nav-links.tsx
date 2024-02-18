@@ -36,7 +36,7 @@ export const NavLinks = ({ navLinks }: { navLinks: NavLink[] }) => {
 						handleNavigateToLink(index, navLink.href)
 					}}
 					className={cn(
-						"group relative flex items-center gap-2 rounded-full px-4 py-2 transition-colors hover:text-foreground/80 focus-visible:outline-none focus-visible:ring focus-visible:ring-primary/50 hover:dark:text-foreground/70",
+						"group relative flex items-center gap-2 rounded-sm px-4 py-1.5 transition-colors hover:text-foreground/80 focus-visible:outline-none focus-visible:ring focus-visible:ring-primary/50 hover:dark:text-foreground/70",
 						active.href === navLink.href &&
 							"text-primary-foreground hover:text-primary-foreground dark:text-foreground"
 					)}
@@ -48,7 +48,7 @@ export const NavLinks = ({ navLinks }: { navLinks: NavLink[] }) => {
 						<motion.div
 							layoutId="clickedbutton"
 							transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
-							className="absolute inset-0 rounded-full bg-primary transition-colors group-hover:bg-primary/90 dark:bg-foreground/5 group-hover:dark:bg-foreground/10"
+							className="absolute inset-0 rounded-sm bg-primary transition-colors group-hover:bg-primary/90 dark:bg-foreground/5 group-hover:dark:bg-foreground/10"
 						/>
 					)}
 
