@@ -10,7 +10,7 @@ export const App = () => {
 	return (
 		<HelmetProvider>
 			<Helmet titleTemplate="%s | pizza.shop" />
-			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<ThemeProvider defaultTheme="system" storageKey="pizza-shop-theme">
 				<RouterProvider router={router} />
 				<Toaster richColors closeButton invert />
 			</ThemeProvider>

@@ -52,7 +52,7 @@
 
 @layer base {
   * {
-    @apply border-border tracking-tighter;
+    @apply border-border tracking-tighter antialiased font-sans;
   }
   body {
     @apply bg-background text-foreground;

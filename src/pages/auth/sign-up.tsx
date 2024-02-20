@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom"
 
 import { FieldErrorMessage } from "@/components/form/field-error-message"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
@@ -98,7 +97,7 @@ export const SignUp = () => {
 						</div>
 
 						<div className="space-y-2">
-							<Label htmlFor="managerName">Nome do propietário</Label>
+							<Label htmlFor="managerName">Nome do proprietário</Label>
 							<Input
 								id="managerName"
 								type="text"
@@ -129,7 +128,7 @@ export const SignUp = () => {
 							)}
 						</div>
 
-						<p className="text-balance px-6 text-center text-sm text-muted-foreground">
+						<p className="text-balance px-6 text-center text-xs text-muted-foreground">
 							Ao continuar, você concorda com nossos{" "}
 							<a
 								href="#"
