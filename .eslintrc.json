@@ -1,3 +1,6 @@
 {
-  "extends": ["@whyleonardo/eslint-config/react"]
+  "extends": ["@whyleonardo/eslint-config/react"],
+	"rules": {
+		"react/self-closing-comp": "off"
+	}
 }
