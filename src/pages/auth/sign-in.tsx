@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 
+import { signIn } from "@/api/sign-in"
 import { signInSchema, SignInForm } from "@/schemas/sign-in"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -23,6 +25,10 @@ export const SignIn = () => {
 		resolver: zodResolver(signInSchema)
 	})
 
+	const { mutateAsync: authenticate } = useMutation({
+		mutationFn: signIn
+	})
+
 	async function handleSignIn(data: SignInForm) {
 		const { email } = data
 
@@ -31,6 +37,8 @@ export const SignIn = () => {
 		email.split("@")
 
 		try {
+			await authenticate({ email })
+
 			toast.success("Um link de acesso foi enviado para o seu email!", {
 				classNames: {
 					actionButton:

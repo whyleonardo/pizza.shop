@@ -111,12 +111,12 @@ export const RevenueChart = () => {
 											payload.map((item, index) => (
 												<Fragment key={`chart-tooltip-${index}`}>
 													<CardHeader>
-														<CardTitle>
+														<CardTitle className="text-sm font-medium">
 															Receita no dia {item.payload.date}
 														</CardTitle>
 													</CardHeader>
 													<CardContent>
-														<span className="text-2xl font-bold">
+														<span className="text-xl font-bold">
 															R$ {item.payload.revenue}
 														</span>
 													</CardContent>
