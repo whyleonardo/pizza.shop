@@ -1,7 +1,7 @@
 import { Fragment } from "react"
 import { Helmet } from "react-helmet-async"
 import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 
 import { FieldErrorMessage } from "@/components/form/field-error-message"
 import { Button } from "@/components/ui/button"
@@ -17,12 +17,17 @@ import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
 export const SignIn = () => {
+	const [searchParams] = useSearchParams()
+
 	const {
 		handleSubmit,
 		register,
 		formState: { errors, isSubmitting }
 	} = useForm<SignInForm>({
-		resolver: zodResolver(signInSchema)
+		resolver: zodResolver(signInSchema),
+		defaultValues: {
+			email: searchParams.get("email") ?? ""
+		}
 	})
 
 	const { mutateAsync: authenticate } = useMutation({
