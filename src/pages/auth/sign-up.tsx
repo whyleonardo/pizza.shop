@@ -9,8 +9,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 
+import { registerRestaurant } from "@/api/register-restaurant"
 import { SignUpForm, signUpSchema } from "@/schemas/sign-up"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 
@@ -25,14 +27,21 @@ export const SignUp = () => {
 		resolver: zodResolver(signUpSchema)
 	})
 
+	const { mutateAsync: registerRestaurantFn } = useMutation({
+		mutationFn: registerRestaurant
+	})
+
 	async function handleSignUp(data: SignUpForm) {
-		const { email } = data
-
-		await new Promise((resolve) => setTimeout(resolve, 2000))
-
-		email.split("@")
+		const { email, managerName, restaurantName, phone } = data
 
 		try {
+			await registerRestaurantFn({
+				email,
+				managerName,
+				restaurantName,
+				phone
+			})
+
 			toast.success("Restaurante cadastrado com sucesso", {
 				classNames: {
 					actionButton:
@@ -40,12 +49,13 @@ export const SignUp = () => {
 				},
 				action: {
 					label: "Login",
-					onClick: () => navigate("/sign-in")
+					onClick: () => navigate(`/sign-in?email=${email}`)
 				}
 			})
-		} catch (error) {
+		} catch (error: unknown) {
 			toast.error("Erro ao cadastrar restaurante", {
-				description: "Por favor, tente novamente."
+				// @ts-expect-error - // Error Treatment
+				description: error.response.data.message as string
 			})
 		}
 	}
