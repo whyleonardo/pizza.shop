@@ -81,9 +81,10 @@ export const StoreProfileDialog = () => {
 		}
 	})
 
-	async function handleUpdateProfile(data: StoreProfileSchema) {
-		const { description, name } = data
-
+	async function handleUpdateProfile({
+		description,
+		name
+	}: StoreProfileSchema) {
 		try {
 			await updateProfileFn({
 				name,
@@ -91,7 +92,7 @@ export const StoreProfileDialog = () => {
 			})
 
 			toast.success("Perfil atualizado com sucesso!")
-		} catch (error) {
+		} catch (_error) {
 			toast.error("Falha ao atualizar o perfil. Tente novamente!")
 		}
 	}

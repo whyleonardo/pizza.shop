@@ -22,18 +22,24 @@ import { z } from "zod"
 export const Orders = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
 
+	const orderId = searchParams.get("orderId")
+	const customerName = searchParams.get("customerName")
+	const status = searchParams.get("status")
+
 	const pageIndex = z.coerce
 		.number()
 		.transform((page) => page - 1)
 		.parse(searchParams.get("page") ?? "1")
 
-	const {
-		data: result,
-		isLoading: isResultLoading,
-		isFetching: isResultFetching
-	} = useQuery({
-		queryKey: ["orders", pageIndex],
-		queryFn: () => getOrders({ pageIndex })
+	const { data: result, isLoading: isResultLoading } = useQuery({
+		queryKey: ["orders", pageIndex, orderId, customerName, status],
+		queryFn: () =>
+			getOrders({
+				pageIndex,
+				customerName,
+				orderId,
+				status: status === "all" ? null : status
+			})
 	})
 
 	function handlePaginate(pageIndex: number) {

@@ -31,9 +31,12 @@ export const SignUp = () => {
 		mutationFn: registerRestaurant
 	})
 
-	async function handleSignUp(data: SignUpForm) {
-		const { email, managerName, restaurantName, phone } = data
-
+	async function handleSignUp({
+		email,
+		managerName,
+		restaurantName,
+		phone
+	}: SignUpForm) {
 		try {
 			await registerRestaurantFn({
 				email,

@@ -34,9 +34,7 @@ export const SignIn = () => {
 		mutationFn: signIn
 	})
 
-	async function handleSignIn(data: SignInForm) {
-		const { email } = data
-
+	async function handleSignIn({ email }: SignInForm) {
 		await new Promise((resolve) => setTimeout(resolve, 2000))
 
 		email.split("@")
