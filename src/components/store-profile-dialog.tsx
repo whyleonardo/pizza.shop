@@ -62,7 +62,6 @@ export const StoreProfileDialog = () => {
 
 			return { previousProfileInfo: cached }
 		},
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		onError(_error, _variables, context) {
 			if (context?.previousProfileInfo) {
 				updateManagedRestaurantCache(context.previousProfileInfo)

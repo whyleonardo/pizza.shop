@@ -12,7 +12,15 @@ import {
 	TableRow
 } from "@/components/ui/table"
 
+import { getOrders } from "@/api/get-orders"
+import { useQuery } from "@tanstack/react-query"
+
 export const Orders = () => {
+	const { data: result } = useQuery({
+		queryKey: ["orders"],
+		queryFn: getOrders
+	})
+
 	return (
 		<Fragment>
 			<Helmet title="Pedidos" />
@@ -40,9 +48,10 @@ export const Orders = () => {
 						</TableHeader>
 
 						<TableBody>
-							{Array.from({ length: 10 }).map((_, index) => (
-								<OrderTableRow key={index} />
-							))}
+							{result?.orders &&
+								result.orders.map((order) => (
+									<OrderTableRow key={order.orderId} order={order} />
+								))}
 						</TableBody>
 					</Table>
 				</div>

@@ -3,18 +3,17 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { TableCell, TableRow } from "@/components/ui/table"
 
 import { OrderDetails } from "./order-details"
+import { OrderStatus } from "./order-status"
 
-import { formatDistanceToNow } from "date-fns"
-import { ptBR } from "date-fns/locale"
+import { Order } from "@/@types/order"
+import { formatDateDistanceToNow } from "@/utils/format-date-distance-to-now"
 import { ArrowRight, Search, X } from "lucide-react"
 
-interface OrderTableRowProps {}
+interface OrderTableRowProps {
+	order: Order
+}
 
-export const OrderTableRow = (props: OrderTableRowProps) => {
-	const formatedDate = formatDistanceToNow(new Date("02-12-2024"), {
-		locale: ptBR,
-		addSuffix: true
-	})
+export const OrderTableRow = ({ order }: OrderTableRowProps) => {
 	return (
 		<TableRow>
 			<TableCell>
@@ -26,22 +25,26 @@ export const OrderTableRow = (props: OrderTableRowProps) => {
 						</Button>
 					</DialogTrigger>
 
-					<OrderDetails />
+					<OrderDetails order={order} />
 				</Dialog>
 			</TableCell>
 
 			<TableCell className="font-mono text-xs font-medium tracking-normal">
-				ohuq2n3wrf890
+				{order.orderId}
 			</TableCell>
-			<TableCell className="text-muted-foreground">{formatedDate}</TableCell>
+			<TableCell className="text-muted-foreground">
+				{formatDateDistanceToNow(order.createdAt)}
+			</TableCell>
 			<TableCell>
-				<div className="flex items-center gap-2">
-					<span className="size-2 rounded-full bg-slate-400" />
-					<span className="text-muted-foreground">Pendente</span>
-				</div>
+				<OrderStatus status={order.status} />
 			</TableCell>
-			<TableCell className="font-medium">Christian Leonardo</TableCell>
-			<TableCell className="font-medium">R$ 49,90</TableCell>
+			<TableCell className="font-medium">{order.customerName}</TableCell>
+			<TableCell className="font-medium">
+				{order.total.toLocaleString("pt-BR", {
+					style: "currency",
+					currency: "BRL"
+				})}
+			</TableCell>
 
 			<TableCell>
 				<Button variant="ghost" size="xs">

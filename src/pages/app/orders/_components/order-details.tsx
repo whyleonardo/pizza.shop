@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button"
 import {
 	DialogContent,
 	DialogDescription,
@@ -15,13 +14,20 @@ import {
 	TableRow
 } from "@/components/ui/table"
 
-interface OrderDetailsProps {}
+import { OrderStatus } from "./order-status"
 
-export const OrderDetails = (props: OrderDetailsProps) => {
+import { Order } from "@/@types/order"
+import { formatDateDistanceToNow } from "@/utils/format-date-distance-to-now"
+
+interface OrderDetailsProps {
+	order: Order
+}
+
+export const OrderDetails = ({ order }: OrderDetailsProps) => {
 	return (
 		<DialogContent>
 			<DialogHeader>
-				<DialogTitle>Pedido: wjrgojwoerjo</DialogTitle>
+				<DialogTitle>Pedido: {order.orderId}</DialogTitle>
 				<DialogDescription>Detalhes do pedido</DialogDescription>
 			</DialogHeader>
 
@@ -31,31 +37,28 @@ export const OrderDetails = (props: OrderDetailsProps) => {
 						<TableRow>
 							<TableCell className="text-muted-foreground">Status</TableCell>
 							<TableCell className="flex justify-end">
-								<div className="flex items-center gap-2">
-									<span className="size-2 rounded-full bg-slate-400" />
-									<span className="text-muted-foreground">Pendente</span>
-								</div>
+								<OrderStatus status={order.status} />
 							</TableCell>
 						</TableRow>
 
 						<TableRow>
 							<TableCell className="text-muted-foreground">Cliente</TableCell>
 							<TableCell className="flex justify-end">
-								Christian Leonardo
+								{order.customerName}
 							</TableCell>
 						</TableRow>
 
 						<TableRow>
 							<TableCell className="text-muted-foreground">Telefone</TableCell>
 							<TableCell className="flex justify-end">
-								(31) 97304-1202
+								{order.customerName}
 							</TableCell>
 						</TableRow>
 
 						<TableRow>
 							<TableCell className="text-muted-foreground">Email</TableCell>
 							<TableCell className="flex justify-end">
-								whyleonardo.dev@gmail.com
+								{order.customerName}
 							</TableCell>
 						</TableRow>
 
@@ -63,7 +66,9 @@ export const OrderDetails = (props: OrderDetailsProps) => {
 							<TableCell className="text-muted-foreground">
 								Realizado há
 							</TableCell>
-							<TableCell className="flex justify-end">há 3 minutos</TableCell>
+							<TableCell className="flex justify-end">
+								{formatDateDistanceToNow(order.createdAt)}
+							</TableCell>
 						</TableRow>
 					</TableBody>
 				</Table>
