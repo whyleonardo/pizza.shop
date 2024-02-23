@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card"
 
 import { useTheme } from "@/providers/theme-provider"
+import { formatCurrency } from "@/utils/format-currency"
 import {
 	ResponsiveContainer,
 	LineChart,
@@ -85,12 +86,7 @@ export const RevenueChart = () => {
 							axisLine={false}
 							tickLine={false}
 							width={80}
-							tickFormatter={(value: number) =>
-								value.toLocaleString("pt-BR", {
-									style: "currency",
-									currency: "BRL"
-								})
-							}
+							tickFormatter={(value: number) => formatCurrency(value)}
 						/>
 
 						<CartesianGrid vertical={false} className="stroke-muted" />
