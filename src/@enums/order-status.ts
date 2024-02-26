@@ -1,7 +1,7 @@
 export enum ORDER_STATUS {
 	"pending" = "Pendente",
 	"canceled" = "Cancelado",
-	"processing" = "Processando",
+	"processing" = "Em Preparo",
 	"delivering" = "Em entrega",
 	"delivered" = "Entregue"
 }
