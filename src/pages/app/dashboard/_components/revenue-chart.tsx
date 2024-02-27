@@ -1,4 +1,5 @@
-import { Fragment } from "react"
+import { Fragment, useMemo, useState } from "react"
+import { DateRange } from "react-day-picker"
 
 import {
 	Card,
@@ -7,9 +8,14 @@ import {
 	CardHeader,
 	CardTitle
 } from "@/components/ui/card"
+import { DateRangePicker } from "@/components/ui/date-range-picker"
+import { Label } from "@/components/ui/label"
 
+import { getDailyRevenueInPeriod } from "@/api/get-daily-revenue-in-period"
 import { useTheme } from "@/providers/theme-provider"
 import { formatCurrency } from "@/utils/format-currency"
+import { useQuery } from "@tanstack/react-query"
+import { subDays } from "date-fns"
 import {
 	ResponsiveContainer,
 	LineChart,
@@ -21,42 +27,30 @@ import {
 } from "recharts"
 import colors from "tailwindcss/colors"
 
-const data = [
-	{
-		date: "10/12",
-		revenue: 1522
-	},
-	{
-		date: "11/12",
-		revenue: 700
-	},
-	{
-		date: "12/12",
-		revenue: 1200
-	},
-	{
-		date: "13/12",
-		revenue: 1100
-	},
-	{
-		date: "14/12",
-		revenue: 1200
-	},
-	{
-		date: "15/12",
-		revenue: 1253
-	},
-	{
-		date: "16/12",
-		revenue: 1200
-	},
-	{
-		date: "17/12",
-		revenue: 1500
-	}
-]
-
 export const RevenueChart = () => {
+	const [dateRange, setDateRange] = useState<DateRange | undefined>({
+		from: subDays(new Date(), 7),
+		to: new Date()
+	})
+
+	const { data: dailyRevenueInPeriod } = useQuery({
+		queryKey: ["metrics", "daily-revenue-in-period", dateRange],
+		queryFn: () =>
+			getDailyRevenueInPeriod({
+				from: dateRange?.from,
+				to: dateRange?.to
+			})
+	})
+
+	const chartData = useMemo(() => {
+		return dailyRevenueInPeriod?.map((chartItem) => {
+			return {
+				date: chartItem.date,
+				receipt: chartItem.receipt / 100
+			}
+		})
+	}, [dailyRevenueInPeriod])
+
 	const { theme } = useTheme()
 
 	const isDarkMode = theme === "dark"
@@ -68,62 +62,69 @@ export const RevenueChart = () => {
 
 					<CardDescription>Receita diária no período</CardDescription>
 				</div>
+
+				<div className="flex items-center gap-3">
+					<Label>Período</Label>
+					<DateRangePicker date={dateRange} onDateChange={setDateRange} />
+				</div>
 			</CardHeader>
 
 			<CardContent>
-				<ResponsiveContainer width="100%" height={240}>
-					<LineChart data={data} style={{ fontSize: 12 }}>
-						<XAxis
-							stroke={colors.zinc[500]}
-							axisLine={false}
-							tickLine={false}
-							dy={16}
-							dataKey="date"
-						/>
+				{dailyRevenueInPeriod && (
+					<ResponsiveContainer width="100%" height={240}>
+						<LineChart data={chartData} style={{ fontSize: 12 }}>
+							<XAxis
+								stroke={colors.zinc[500]}
+								axisLine={false}
+								tickLine={false}
+								dy={16}
+								dataKey="date"
+							/>
 
-						<YAxis
-							stroke={colors.zinc[500]}
-							axisLine={false}
-							tickLine={false}
-							width={80}
-							tickFormatter={(value: number) => formatCurrency(value)}
-						/>
+							<YAxis
+								stroke={colors.zinc[500]}
+								axisLine={false}
+								tickLine={false}
+								width={80}
+								tickFormatter={(value: number) => formatCurrency(value)}
+							/>
 
-						<CartesianGrid vertical={false} className="stroke-muted" />
+							<CartesianGrid vertical={false} className="stroke-muted" />
 
-						<Line
-							type="linear"
-							strokeWidth={2}
-							dataKey="revenue"
-							stroke={isDarkMode ? colors.indigo[400] : colors.indigo[500]}
-						/>
+							<Line
+								type="linear"
+								strokeWidth={2}
+								dataKey="receipt"
+								stroke={isDarkMode ? colors.indigo[400] : colors.indigo[500]}
+							/>
 
-						<Tooltip
-							content={({ active, payload }) => {
-								return (
-									<Card>
-										{active &&
-											payload &&
-											payload.map((item, index) => (
-												<Fragment key={`chart-tooltip-${index}`}>
-													<CardHeader>
-														<CardTitle className="text-sm font-medium">
-															Receita no dia {item.payload.date}
-														</CardTitle>
-													</CardHeader>
-													<CardContent>
-														<span className="text-xl font-bold">
-															R$ {item.payload.revenue}
-														</span>
-													</CardContent>
-												</Fragment>
-											))}
-									</Card>
-								)
-							}}
-						/>
-					</LineChart>
-				</ResponsiveContainer>
+							<Tooltip
+								content={({ active, payload }) => {
+									return (
+										<Card>
+											{active &&
+												payload &&
+												payload.map((item, index) => (
+													<Fragment key={`chart-tooltip-${index}`}>
+														<CardHeader>
+															<CardTitle className="text-sm font-medium">
+																Receita no dia {item.payload.date}
+															</CardTitle>
+														</CardHeader>
+														<CardContent>
+															<span className="text-xl font-bold">
+																{formatCurrency(item.payload.receipt)}
+															</span>
+														</CardContent>
+													</Fragment>
+												))}
+										</Card>
+									)
+								}}
+							/>
+						</LineChart>
+					</ResponsiveContainer>
+				)}
 			</CardContent>
 		</Card>
 	)
