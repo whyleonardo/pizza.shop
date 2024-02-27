@@ -84,17 +84,17 @@ export const OrdersTableFilter = () => {
 
 	return (
 		<form
-			className="flex items-center gap-2"
+			className="flex items-center gap-2 md:flex-row flex-col"
 			onSubmit={handleSubmit(handleFilter)}
 		>
 			<span className="text-sm font-semibold">Filtros</span>
 			<Input
-				className="h-8 w-auto"
+				className="h-8 md:w-auto w-[220px]"
 				placeholder="ID do pedido"
 				{...register("orderId")}
 			/>
 			<Input
-				className="h-8 w-[320px]"
+				className="h-8 md:w-[320px] w-[220px]"
 				placeholder="Nome do cliente"
 				{...register("customerName")}
 			/>
@@ -110,7 +110,7 @@ export const OrdersTableFilter = () => {
 							value={value}
 							disabled={disabled}
 						>
-							<SelectTrigger className="h-8 w-[180px]">
+							<SelectTrigger className="h-8 md:w-[180px] w-[220px]">
 								<SelectValue placeholder="Status" />
 							</SelectTrigger>
 							<SelectContent>
@@ -126,20 +126,22 @@ export const OrdersTableFilter = () => {
 				}}
 			/>
 
-			<Button type="submit" variant="secondary" size="sm">
-				<Search className="mr-2 size-4" />
-				Filtrar resultados
-			</Button>
+			<div className="flex items-center gap-2">
+				<Button type="submit" variant="secondary" size="sm">
+					<Search className="mr-2 size-4" />
+					Filtrar resultados
+				</Button>
 
-			<Button
-				onClick={handleClearFilters}
-				type="button"
-				variant="outline"
-				size="sm"
-			>
-				<X className="mr-2 size-4" />
-				Remover filtros
-			</Button>
+				<Button
+					onClick={handleClearFilters}
+					type="button"
+					variant="outline"
+					size="sm"
+				>
+					<X className="mr-2 size-4" />
+					Remover filtros
+				</Button>
+			</div>
 		</form>
 	)
 }

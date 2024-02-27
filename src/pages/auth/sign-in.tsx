@@ -52,7 +52,7 @@ export const SignIn = () => {
 					onClick: () => handleSignIn
 				}
 			})
-		} catch (error) {
+		} catch (_error) {
 			toast.error("Credenciais inválidas", {
 				description: "Por favor, tente novamente."
 			})

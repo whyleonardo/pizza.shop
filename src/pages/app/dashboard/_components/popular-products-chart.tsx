@@ -66,7 +66,7 @@ export const PopularProductsChart = () => {
 	}
 
 	return (
-		<Card className="col-span-3">
+		<Card className="md:col-span-3 col-span-10">
 			<CardHeader className="flex-row items-center justify-between pb-8">
 				<div className="flex w-full items-center justify-between space-y-1">
 					<CardTitle>Produtos Populares</CardTitle>

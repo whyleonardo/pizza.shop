@@ -3,13 +3,12 @@ import { Helmet } from "react-helmet-async"
 import { useSearchParams } from "react-router-dom"
 
 import { OrderTableRow } from "./_components/order-table-row"
+import { OrderTableSkeleton } from "./_components/order-table-skeleton"
 import { OrdersTableFilter } from "./_components/orders-table-filters"
 import { Pagination } from "@/components/pagination"
-import { Skeleton } from "@/components/ui/skeleton"
 import {
 	Table,
 	TableBody,
-	TableCell,
 	TableHead,
 	TableHeader,
 	TableRow
@@ -31,7 +30,7 @@ export const Orders = () => {
 		.transform((page) => page - 1)
 		.parse(searchParams.get("page") ?? "1")
 
-	const { data: result, isLoading: isResultLoading } = useQuery({
+	const { data: result } = useQuery({
 		queryKey: ["orders", pageIndex, orderId, customerName, status],
 		queryFn: () =>
 			getOrders({
@@ -48,8 +47,6 @@ export const Orders = () => {
 			return prev
 		})
 	}
-
-	const ordersPerPage = (result?.meta && result.meta.perPage) || 10
 
 	return (
 		<Fragment>
@@ -77,21 +74,13 @@ export const Orders = () => {
 							</TableRow>
 						</TableHeader>
 						<TableBody>
-							{isResultLoading &&
-								Array.from({ length: ordersPerPage }).map((_, index) => (
-									<TableRow key={`order-skeleton-row-${index}`}>
-										{Array.from({ length: 8 }).map((_, i) => (
-											<TableCell key={`order-skeleton-cell-${i}`}>
-												<Skeleton className="h-7" />
-											</TableCell>
-										))}
-									</TableRow>
-								))}
-
-							{result?.orders &&
+							{result?.orders ? (
 								result.orders.map((order) => (
 									<OrderTableRow key={order.orderId} order={order} />
-								))}
+								))
+							) : (
+								<OrderTableSkeleton />
+							)}
 						</TableBody>
 					</Table>
 				</div>

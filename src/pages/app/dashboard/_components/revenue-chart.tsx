@@ -56,7 +56,7 @@ export const RevenueChart = () => {
 
 	const isDarkMode = theme === "dark"
 	return (
-		<Card className="col-span-6">
+		<Card className="md:col-span-6 col-span-10">
 			<CardHeader className="flex-row items-center justify-between pb-8">
 				<div className="space-y-1">
 					<CardTitle>Receita no período</CardTitle>
@@ -64,7 +64,7 @@ export const RevenueChart = () => {
 					<CardDescription>Receita diária no período</CardDescription>
 				</div>
 
-				<div className="flex items-center gap-3">
+				<div className="items-center gap-3 lg:flex hidden">
 					<Label>Período</Label>
 					<DateRangePicker date={dateRange} onDateChange={setDateRange} />
 				</div>
