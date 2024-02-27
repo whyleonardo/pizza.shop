@@ -2,6 +2,8 @@ import { Fragment } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { MetricCardSkeleton } from "./metric-card-skeleton"
+
 import { getMonthRevenue } from "@/api/get-month-revenue"
 import { formatCurrency } from "@/utils/format-currency"
 import { useQuery } from "@tanstack/react-query"
@@ -21,7 +23,7 @@ export const MonthlyRevenueCard = () => {
 				<DollarSign />
 			</CardHeader>
 			<CardContent className="space-y-1">
-				{monthRevenue && (
+				{monthRevenue ? (
 					<Fragment>
 						<span className="text-2xl font-bold">
 							{formatCurrency(monthRevenue.receipt / 100)}
@@ -39,6 +41,8 @@ export const MonthlyRevenueCard = () => {
 							em relação ao mês passado
 						</p>
 					</Fragment>
+				) : (
+					<MetricCardSkeleton />
 				)}
 			</CardContent>
 		</Card>

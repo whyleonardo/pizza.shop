@@ -2,6 +2,7 @@ import { Fragment } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { MetricCardSkeleton } from "./metric-card-skeleton"
 import { getMonthOrdersAmount } from "@/api/get-month-orders-amount"
 import { useQuery } from "@tanstack/react-query"
 import { Utensils } from "lucide-react"
@@ -19,7 +20,7 @@ export const MonthlyOrdersAmountCard = () => {
 				<Utensils />
 			</CardHeader>
 			<CardContent className="space-y-1">
-				{monthOrdersAmount && (
+				{monthOrdersAmount ? (
 					<Fragment>
 						<span className="text-2xl font-bold">
 							{monthOrdersAmount.amount.toLocaleString("pt-BR")}
@@ -37,6 +38,8 @@ export const MonthlyOrdersAmountCard = () => {
 							em relação ao mês passado
 						</p>
 					</Fragment>
+				) : (
+					<MetricCardSkeleton />
 				)}
 			</CardContent>
 		</Card>

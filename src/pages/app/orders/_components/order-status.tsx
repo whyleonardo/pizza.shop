@@ -6,14 +6,6 @@ interface OrderStatusProps {
 	status: OrderStatusType
 }
 
-// const orderStatusMap: Record<OrderStatus, string> = {
-// 	canceled: "Cancelado",
-// 	processing: "Em preparo",
-// 	pending: "Pendente",
-// 	delivering: "Em entrega",
-// 	delivered: "Entregue"
-// }
-
 export const OrderStatus = ({ status }: OrderStatusProps) => {
 	return (
 		<div className="flex items-center gap-2">

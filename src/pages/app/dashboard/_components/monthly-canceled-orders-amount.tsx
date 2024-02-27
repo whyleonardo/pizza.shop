@@ -2,6 +2,8 @@ import { Fragment } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { MetricCardSkeleton } from "./metric-card-skeleton"
+
 import { getMonthCanceledOrdersAmount } from "@/api/get-month-cancel-orders-amount"
 import { useQuery } from "@tanstack/react-query"
 import { DollarSign } from "lucide-react"
@@ -21,7 +23,7 @@ export const CanceledOrdersAmountCard = () => {
 				<DollarSign />
 			</CardHeader>
 			<CardContent className="space-y-1">
-				{monthCanceledOrdersAmount && (
+				{monthCanceledOrdersAmount ? (
 					<Fragment>
 						<span className="text-2xl font-bold">
 							{monthCanceledOrdersAmount.amount}
@@ -39,6 +41,8 @@ export const CanceledOrdersAmountCard = () => {
 							em relação ao mês passado
 						</p>
 					</Fragment>
+				) : (
+					<MetricCardSkeleton />
 				)}
 			</CardContent>
 		</Card>

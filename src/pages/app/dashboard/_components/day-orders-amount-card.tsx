@@ -2,6 +2,7 @@ import { Fragment } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
+import { MetricCardSkeleton } from "./metric-card-skeleton"
 import { getDayOrdersAmount } from "@/api/get-day-orders-amount"
 import { useQuery } from "@tanstack/react-query"
 import { Utensils } from "lucide-react"
@@ -19,7 +20,7 @@ export const DayOrdersAmountCard = () => {
 				<Utensils />
 			</CardHeader>
 			<CardContent className="space-y-1">
-				{dayOrdersAmount && (
+				{dayOrdersAmount ? (
 					<Fragment>
 						<span className="text-2xl font-bold">
 							{dayOrdersAmount.amount.toLocaleString("pt-BR")}
@@ -37,6 +38,8 @@ export const DayOrdersAmountCard = () => {
 							em relação a ontem
 						</p>
 					</Fragment>
+				) : (
+					<MetricCardSkeleton />
 				)}
 			</CardContent>
 		</Card>
